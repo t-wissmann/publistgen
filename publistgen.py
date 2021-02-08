@@ -3,11 +3,29 @@
 import os
 import sys
 import argparse
+import textwrap
+from pathlib import Path
 
-BIBLIB_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'biblib')
+BIBLIB_DIR = os.path.join(os.path.dirname(Path(__file__).resolve()), 'biblib')
 sys.path.append(BIBLIB_DIR)
-import biblib.bib
-import biblib.algo
+
+try:
+    import biblib.bib
+    import biblib.algo
+except ModuleNotFoundError as ex:
+    print(ex, file=sys.stderr)
+    print(textwrap.dedent(f"""
+    Error: could not load the 'biblib' library.
+    To fix this do *one* of the following:
+
+    First Option: install clone 'biblib' locally by running:
+
+        git clone https://github.com/aclements/biblib {BIBLIB_DIR.rstrip('/')}/
+
+    Second Option: install 'publistgen' by running: python setup.py install
+
+    """), file=sys.stderr)
+    sys.exit(1)
 
 def load_bib(bibtex_filehandle):
     try:
