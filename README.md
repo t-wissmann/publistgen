@@ -2,11 +2,10 @@
 
 The `biblisttw.py` script generates html bibliography lists from bibtex-files.
 It uses the python library [biblib](https://github.com/aclements/biblib) for
-parsing bib files -- it is the only reliable bibtex parser I have used so far.
+parsing bib files. It is the only reliable bibtex parser I have used so far.
 
 The script was written for [my own publication
-list](https://thorsten-wissmann.de/publications.html) but after several
-requests I decided to publish it.
+list](https://thorsten-wissmann.de/publications.html) but I got several requests to make it publicly available.
 
 ## Requirements
 
