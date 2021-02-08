@@ -1,6 +1,6 @@
-# publistgen -- generate publication lists
+# publistgen: generate static publication lists from bibtex files
 
-The `biblisttw.py` script generates html bibliography lists from bibtex-files.
+The `publistgen.py` script generates html bibliography lists from bibtex-files.
 It uses the python library [biblib](https://github.com/aclements/biblib) for
 parsing bib files. It is the only reliable bibtex parser I have used so far.
 
