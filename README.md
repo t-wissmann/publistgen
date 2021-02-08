@@ -11,3 +11,24 @@ list](https://thorsten-wissmann.de/publications.html) but I got several requests
 
 * Python 3
 * [biblib](https://github.com/aclements/biblib) (Either globally or cloned to the subdirectory `biblib/`)
+
+## Installation
+
+Either install via `python setup.py install` or by simply cloning the [biblib](https://github.com/aclements/biblib) library
+to the `biblib/` subdirectory.
+
+## Usage
+
+Run
+```bash
+/path/to/publistgen.py bibfile.bib > publications.html
+```
+to generate `publications.html`. If you want to customize the output e.g. by linking
+to homepages of authors, you can overwrite default settings in a `publist.py` config file:
+```python
+# a dict mapping author names (in utf8) to their homepage url
+author_homepages = {
+    'Thorsten Wißmann': "http://www8.informatik.uni-erlangen.de/thorsten",
+}
+
+```

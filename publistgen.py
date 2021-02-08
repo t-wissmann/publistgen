@@ -27,6 +27,8 @@ except ModuleNotFoundError as ex:
     """), file=sys.stderr)
     sys.exit(1)
 
+author_homepages = {}
+
 def load_bib(bibtex_filehandle):
     try:
         # Load databases
@@ -39,29 +41,6 @@ def load_bib(bibtex_filehandle):
     except biblib.messages.InputError:
         print("InputError")
         sys.exit(1)
-
-author_homepages = {
-'Sergey Goncharov': "http://www8.informatik.uni-erlangen.de/~sergey/",
-'Lutz Schröder': "http://www8.informatik.uni-erlangen.de/schroeder/",
-'Stefan Milius': "https://www8.cs.fau.de/milius",
-'Tadeusz Litak': "http://www8.informatik.uni-erlangen.de/~litak/",
-'Daniel Gorín': "http://www8.informatik.uni-erlangen.de/~gorin/",
-'Thorsten Wißmann': "http://www8.informatik.uni-erlangen.de/thorsten",
-'Dirk Pattinson': "http://users.cecs.anu.edu.au/~dpattinson/",
-'Ulrich Dorsch': "https://www8.cs.fau.de/ulrich",
-'Dexter Kozen': "http://www.cs.cornell.edu/~kozen/",
-'Harsh Beohar': "http://www.ti.inf.uni-due.de/people/beohar/",
-'Barbara König': "http://www.ti.inf.uni-due.de/people/koenig/",
-'Sebastian Küpper': "http://www.fernuni-hagen.de/mi/lehrende/kuepper/index.shtml",
-'Alexandra Silva': "http://www.alexandrasilva.org/#/main.html",
-'Hans-Peter Deifel': "https://www8.cs.fau.de/deifel",
-'Jérémy Dubut': "http://group-mmm.org/~dubut/",
-'Shin-ya Katsumata': "http://group-mmm.org/~s-katsumata/index-e.html",
-'Lurdes Sousa': "http://www.estgv.ipv.pt/paginaspessoais/sousa/",
-'Ichiro Hasuo': "https://group-mmm.org/~ichiro/",
-#'Jiří Adámek': "https://www.tu-braunschweig.de/iti/mitarbeiter/adamek/",
-'Jiří Adámek': "https://dblp.uni-trier.de/pers/hd/a/Ad=aacute=mek:Jir=iacute=",
-}
 
 def bibentry2html(ent):
     global auth_urls
@@ -279,7 +258,27 @@ def bibliography2gitlabmarkdown(db, year2bibs):
 
 
 def main():
-    with open(sys.argv[1]) as fh:
+    parser = argparse.ArgumentParser(
+            description='generate a static publication list from bibtex',
+            formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    default_config_file = 'publist.py'
+    parser.add_argument('--config',
+                        default=default_config_file,
+                        help='config file')
+    parser.add_argument('BIBTEX',
+                        help='input bibtex file')
+    args = parser.parse_args()
+
+
+    if os.path.isfile(args.config):
+        print(f"Evaluating config file '{args.config}'...", file=sys.stderr)
+        exec(compile(open(args.config, "rb").read(), args.config, 'exec'), globals())
+    else:
+        if args.config != default_config_file:
+            print(f"Error: config file '{args.config}' not found!'", file=sys.stderr)
+            sys.exit(1)
+
+    with open(args.BIBTEX) as fh:
         db = load_bib(fh)
         #print(db)
         year2bibs = { }
