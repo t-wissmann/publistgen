@@ -32,3 +32,6 @@ author_homepages = {
     'Thorsten Wißmann': "http://www8.informatik.uni-erlangen.de/thorsten",
 }
 ```
+
+This configuration file is a python file that is evaluated and thus can
+customize all functions that exist publistgen.py.
