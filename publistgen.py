@@ -70,12 +70,12 @@ def bibentry2html(ent):
         pubplace += " ({})".format(ent['note'])
     extraurls = ""
     if 'url' in ent:
-        extraurls += ' [<a href="{}">PDF</a>]'.format(ent['url'])
+        extraurls += ' <a class="button" href="{}">PDF</a>'.format(ent['url'])
     if 'preprinturl' in ent:
-        extraurls += ' [<a href="{}">Preprint PDF</a>]'.format(ent['preprinturl'])
+        extraurls += ' <a class="button" href="{}">Preprint PDF</a>'.format(ent['preprinturl'])
     if 'doi' in ent:
         doi = ent['doi']
-        extraurls += ' [<a href="https://dx.doi.org/{}">DOI: {}</a>]'.format(doi, doi)
+        extraurls += ' <a class="button" href="https://dx.doi.org/{}">DOI: {}</a>'.format(doi, doi)
     formatvars = {
         'mainurl': ent.get('url', ent.get('preprinturl')),
         'title': biblib.algo.tex_to_unicode(ent['title']),
@@ -88,8 +88,11 @@ def bibentry2html(ent):
      <span class="title"><a href="{mainurl}">{title}</a></span>
      (<span class="authors">{authors}</span>)
      <span class="venueline">In: <span class="journal">{pubplace}</span>
-     [<a style="cursor: pointer;" onClick="showBibHere(this);">bibtex</a>]
+     <br>
+     <span class="buttonline">
+     <a class="button" style="cursor: pointer;" onClick="showBibHere(this);">bibtex</a>
      {extraurls}
+     </span>
      <pre class="bibhidden">
 {bibsource}</pre>
     """.format(**formatvars)
