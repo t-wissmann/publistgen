@@ -28,6 +28,7 @@ except ModuleNotFoundError as ex:
     sys.exit(1)
 
 author_homepages = {}
+custom_buttons = []
 
 def load_bib(bibtex_filehandle):
     try:
@@ -44,6 +45,7 @@ def load_bib(bibtex_filehandle):
 
 def bibentry2html(ent):
     global auth_urls
+    global custom_buttons
     authors = [
         biblib.algo.tex_to_unicode(author.pretty(),
                                    pos=ent.field_pos['author'])
@@ -71,6 +73,9 @@ def bibentry2html(ent):
     extraurls = ""
     if 'url' in ent:
         extraurls += ' <a class="button" href="{}">PDF</a>'.format(ent['url'])
+    for fieldname, button_generator in custom_buttons:
+        if fieldname in ent:
+            extraurls += button_generator(ent[fieldname])
     if 'preprinturl' in ent:
         extraurls += ' <a class="button" href="{}">Preprint PDF</a>'.format(ent['preprinturl'])
     if 'doi' in ent:
