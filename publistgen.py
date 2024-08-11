@@ -130,12 +130,12 @@ def bibentry2markdown(ent):
         pubplace += ", pp. " + ent['pages']
     extraurls = ""
     if 'url' in ent:
-        extraurls += ' \[[PDF]({})\]'.format(ent['url'])
+        extraurls += r' \[[PDF]({})\]'.format(ent['url'])
     if 'preprinturl' in ent:
-        extraurls += ' \[[Preprint PDF]({})\]'.format(ent['preprinturl'])
+        extraurls += r' \[[Preprint PDF]({})\]'.format(ent['preprinturl'])
     if 'doi' in ent:
         doi = ent['doi']
-        extraurls += ' \[[DOI: {}](https://dx.doi.org/{})\]'.format(doi, doi)
+        extraurls += r' \[[DOI: {}](https://dx.doi.org/{})\]'.format(doi, doi)
     formatvars = {
         'mainurl': ent.get('url', ent.get('preprinturl')),
         'title': biblib.algo.tex_to_unicode(ent['title']),
